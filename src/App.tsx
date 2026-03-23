@@ -7,11 +7,17 @@
 
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CustomCursor from './components/CustomCursor';
 import EasterEggs from './components/EasterEggs';
 import { useLenis } from './hooks/useLenis';
+
+// Register GSAP plugins once globally (replaces src/main.tsx)
+gsap.registerPlugin(ScrollTrigger);
+gsap.ticker.lagSmoothing(0);
 
 // Lazy-load below-the-fold sections to reduce initial JS parse on mobile
 const About = dynamic(() => import('./components/About'), { ssr: false });

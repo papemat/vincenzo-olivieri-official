@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Anton, Inter } from 'next/font/google'
-import { GSAPProvider } from '@/components/GSAPProvider'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -24,6 +23,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vincenzoolivieri.it'),
   title: 'Vincenzo Olivieri — Comico, Autore, Speaker',
   description: 'Sito ufficiale di Vincenzo Olivieri. Comico, caratterista, cantante, autore e speaker radiofonico. In tour con "Roba da matti 2025".',
   keywords: ['Vincenzo Olivieri', 'comico', 'stand-up', 'Roba da matti', 'tour 2025', 'Abruzzo'],
@@ -58,9 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p className="splash-star">★ Roba da matti tour 2025 ★</p>
           <div className="splash-line" />
         </div>
-        <GSAPProvider>
-          {children}
-        </GSAPProvider>
+        {children}
       </body>
     </html>
   )

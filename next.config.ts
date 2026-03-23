@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'cdn.sanity.io' },
     ],
   },
+  experimental: {
+    // Sanity uses useEffectEvent which requires React 19 ESM exports
+    esmExternals: true,
+  },
 }
 
 export default nextConfig

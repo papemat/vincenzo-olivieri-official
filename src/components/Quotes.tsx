@@ -1,41 +1,14 @@
 'use client'
 
 import { motion } from 'motion/react';
-import { Quote } from 'lucide-react';
+import { Quote as QuoteIcon } from 'lucide-react';
+import type { Quote } from '@/types/sanity';
 
-const QUOTES = [
-  {
-    text: "Un talento naturale, capace di tenere il palco per ore senza mai far calare l'attenzione.",
-    author: "Il Centro",
-    role: "Quotidiano",
-  },
-  {
-    text: "Vincenzo Olivieri non fa solo ridere, racconta l'Italia con un'ironia pungente e intelligente.",
-    author: "Radio Delta 1",
-    role: "Emittente Radiofonica",
-  },
-  {
-    text: "È il figlio che ho sempre sognato. E finalmente ha trovato un lavoro vero.",
-    author: "Mia Mamma",
-    role: "Critica Severissima",
-  },
-  {
-    text: "Riesce a far ridere anche chi ha il mutuo. E questo è il vero miracolo.",
-    author: "Corriere d'Abruzzo",
-    role: "Stampa Locale",
-  },
-  {
-    text: "Sul palco come nella vita: fuori di testa, ma in modo assolutamente professionale.",
-    author: "Radio Studio 1",
-    role: "Radio",
-  },
-];
-
-function QuoteCard({ quote }: { quote: (typeof QUOTES)[number] }) {
+function QuoteCard({ quote }: { quote: Quote }) {
   return (
     <div className="w-80 md:w-96 shrink-0 whitespace-normal bg-zinc-900/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2rem] group hover:border-comedy-yellow/30 hover:bg-zinc-900/60 transition-all duration-500 shadow-2xl flex flex-col justify-between" style={{ height: '320px' }}>
       <div>
-        <Quote size={36} className="text-comedy-yellow/40 mb-5 group-hover:text-comedy-yellow group-hover:scale-110 transition-all duration-500" />
+        <QuoteIcon size={36} className="text-comedy-yellow/40 mb-5 group-hover:text-comedy-yellow group-hover:scale-110 transition-all duration-500" />
         <p className="text-base md:text-lg font-medium leading-relaxed text-gray-400 group-hover:text-white transition-colors mb-8">
           "{quote.text}"
         </p>
@@ -53,7 +26,11 @@ function QuoteCard({ quote }: { quote: (typeof QUOTES)[number] }) {
   );
 }
 
-export default function Quotes() {
+interface QuotesProps {
+  quotes: Quote[];
+}
+
+export default function Quotes({ quotes }: QuotesProps) {
   return (
     <section className="pt-12 pb-10 md:pt-20 md:pb-16 bg-[#050505] text-white relative overflow-hidden section-fade">
       {/* Yellow glow */}
@@ -99,7 +76,7 @@ export default function Quotes() {
           className="flex items-stretch gap-6 mb-6 quotes-track"
           style={{ animation: 'marquee 30s linear infinite', width: 'max-content' }}
         >
-          {[...QUOTES, ...QUOTES, ...QUOTES].map((quote, i) => (
+          {[...quotes, ...quotes, ...quotes].map((quote, i) => (
             <div key={i} className="h-full flex"><QuoteCard quote={quote} /></div>
           ))}
         </div>
@@ -109,7 +86,7 @@ export default function Quotes() {
           className="flex items-stretch gap-6 quotes-track"
           style={{ animation: 'marquee-reverse 22s linear infinite', width: 'max-content' }}
         >
-          {[...QUOTES, ...QUOTES, ...QUOTES].map((quote, i) => (
+          {[...quotes, ...quotes, ...quotes].map((quote, i) => (
             <div key={i} className="h-full flex"><QuoteCard quote={quote} /></div>
           ))}
         </div>

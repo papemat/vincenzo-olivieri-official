@@ -6,43 +6,23 @@ import { Calendar, MapPin, Ticket } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import type { Show } from '@/types/sanity';
 
-const SHOWS = [
-  {
-    id: 1,
-    title: 'Roba da matti summer tour 2025',
-    date: '15 LUG 2025',
-    location: 'Pescara',
-    venue: 'Stadio Adriatico',
-    status: 'Disponibile',
-  },
-  {
-    id: 2,
-    title: 'Roba da matti summer tour 2025',
-    date: '22 LUG 2025',
-    location: 'Chieti',
-    venue: 'Anfiteatro La Civitella',
-    status: 'Disponibile',
-  },
-  {
-    id: 3,
-    title: 'Non è mai troppo Abruzzo',
-    date: '10 AGO 2025',
-    location: "L'Aquila",
-    venue: 'Piazza Duomo',
-    status: 'Ultimi Posti',
-  },
-  {
-    id: 4,
-    title: 'Comedy show',
-    date: '05 SET 2025',
-    location: 'Roma',
-    venue: 'Teatro Brancaccio',
-    status: 'Sold Out',
-  },
-];
+const MONTHS_IT = ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'];
 
-export default function Shows() {
+function formatShowDate(isoDate: string) {
+  const d = new Date(isoDate);
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const month = MONTHS_IT[d.getUTCMonth()];
+  const year = d.getUTCFullYear();
+  return { day, month, year: String(year) };
+}
+
+interface ShowsProps {
+  shows: Show[];
+}
+
+export default function Shows({ shows }: ShowsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -111,17 +91,14 @@ export default function Shows() {
 
         {/* Shows list — newspaper style */}
         <div className="flex flex-col">
-          {SHOWS.map((show) => {
-            const dateParts = show.date.split(' ');
-            const day = dateParts[0];
-            const month = dateParts[1];
-            const year = dateParts[2];
+          {shows.map((show) => {
+            const { day, month, year } = formatShowDate(show.date);
             const isSoldOut = show.status === 'Sold Out';
             const isLastSpots = show.status === 'Ultimi Posti';
 
             return (
               <div
-                key={show.id}
+                key={show._id}
                 className={`show-row group flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-0 py-6 md:py-9 px-5 md:px-8 rounded-xl border-b border-white/10 hover:border-comedy-yellow/20 transition-all duration-300 first:border-t ${
                   isSoldOut ? 'opacity-50' : ''
                 }`}
@@ -171,7 +148,9 @@ export default function Shows() {
                     </div>
                   ) : (
                     <a
-                      href="#"
+                      href={show.ticketUrl ?? '#'}
+                      target={show.ticketUrl ? '_blank' : undefined}
+                      rel={show.ticketUrl ? 'noopener noreferrer' : undefined}
                       className="group/btn relative inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-bold uppercase tracking-wider text-xs hover:bg-comedy-yellow transition-all shadow-lg overflow-hidden whitespace-nowrap"
                     >
                       <span className="relative z-10 flex items-center gap-2">

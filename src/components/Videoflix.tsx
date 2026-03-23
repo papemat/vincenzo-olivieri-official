@@ -6,39 +6,13 @@ import { Play, Tv, ArrowRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import type { Video } from '@/types/sanity';
 
-const VIDEOS = [
-  {
-    id: 1,
-    title: 'Il meglio di Cammellò',
-    category: 'Sketch',
-    thumbnail: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800',
-    duration: '12:45',
-  },
-  {
-    id: 2,
-    title: 'Intervista a Radio Delta 1',
-    category: 'Interviste',
-    thumbnail: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800',
-    duration: '08:20',
-  },
-  {
-    id: 3,
-    title: 'Dietro le quinte del Tour',
-    category: 'Backstage',
-    thumbnail: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=800',
-    duration: '15:30',
-  },
-  {
-    id: 4,
-    title: "Monologo sull'Abruzzo",
-    category: 'Stand-up',
-    thumbnail: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=800',
-    duration: '05:15',
-  },
-];
+interface VideoflixProps {
+  videos: Video[];
+}
 
-export default function Videoflix() {
+export default function Videoflix({ videos }: VideoflixProps) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -60,6 +34,8 @@ export default function Videoflix() {
       }
     );
   }, { scope: gridRef });
+
+  if (!videos || videos.length === 0) return null;
 
   return (
     <section id="videoflix" className="py-14 md:py-24 bg-[#050505] text-white relative overflow-hidden section-fade">
@@ -113,12 +89,12 @@ export default function Videoflix() {
           <div className="video-card group cursor-pointer md:col-span-2 md:row-span-2 relative rounded-2xl md:rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900/50 aspect-[4/3] md:aspect-auto md:min-h-[500px]">
             {/* Category watermark */}
             <div aria-hidden className="absolute top-4 right-4 font-headline text-[8rem] text-white/[0.04] leading-none uppercase select-none pointer-events-none z-0">
-              {VIDEOS[0].category}
+              {videos[0].category}
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-10 opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
             <img
-              src={VIDEOS[0].thumbnail}
-              alt={VIDEOS[0].title}
+              src={videos[0].thumbnailUrl}
+              alt={videos[0].title}
               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             <div className="absolute inset-0 z-20 flex flex-col justify-end p-5 md:p-12">
@@ -127,14 +103,14 @@ export default function Videoflix() {
                   Nuova Uscita
                 </span>
                 <div className="px-3 py-1 bg-black/50 backdrop-blur-md rounded-sm border border-white/10 text-xs font-mono text-gray-300">
-                  {VIDEOS[0].duration}
+                  {videos[0].duration}
                 </div>
               </div>
               <h3
                 className="font-headline uppercase leading-tight mb-4 drop-shadow-2xl group-hover:text-comedy-yellow transition-colors duration-500"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
               >
-                {VIDEOS[0].title}
+                {videos[0].title}
               </h3>
               <div className="flex items-center gap-6">
                 <button className="flex items-center justify-center w-14 h-14 bg-comedy-yellow text-black rounded-full hover:bg-yellow-400 transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,215,0,0.3)]">
@@ -146,14 +122,14 @@ export default function Videoflix() {
           </div>
 
           {/* Secondary videos — 2 side cards in right column */}
-          {VIDEOS.slice(1, 3).map((video) => (
+          {videos.slice(1, 3).map((video) => (
             <div
-              key={video.id}
+              key={video._id}
               className="video-card group cursor-pointer flex flex-col"
             >
               <div className="relative aspect-video rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 mb-4 shadow-lg flex-1">
                 <img
-                  src={video.thumbnail}
+                  src={video.thumbnailUrl}
                   alt={video.title}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                 />
@@ -178,11 +154,11 @@ export default function Videoflix() {
           ))}
 
           {/* 4th video — full-width strip */}
-          <div className="video-card group cursor-pointer md:col-span-3 flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-white/10 bg-zinc-900/50 hover:border-comedy-yellow/20 transition-all duration-500">
+          {videos[3] && <div className="video-card group cursor-pointer md:col-span-3 flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-white/10 bg-zinc-900/50 hover:border-comedy-yellow/20 transition-all duration-500">
             <div className="relative aspect-video md:aspect-auto md:w-64 md:h-40 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 shrink-0">
               <img
-                src={VIDEOS[3].thumbnail}
-                alt={VIDEOS[3].title}
+                src={videos[3].thumbnailUrl}
+                alt={videos[3].title}
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
               />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -191,20 +167,20 @@ export default function Videoflix() {
                 </div>
               </div>
               <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 backdrop-blur-md rounded-sm text-xs font-mono border border-white/10 text-gray-300">
-                {VIDEOS[3].duration}
+                {videos[3].duration}
               </div>
             </div>
             <div className="flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
                 <span className="w-4 h-px bg-comedy-yellow" />
-                <span className="text-xs font-bold uppercase tracking-widest text-comedy-yellow">{VIDEOS[3].category}</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-comedy-yellow">{videos[3].category}</span>
               </div>
               <h3 className="font-headline text-3xl md:text-4xl uppercase tracking-wide leading-tight group-hover:text-comedy-yellow text-white transition-colors mb-2">
-                {VIDEOS[3].title}
+                {videos[3].title}
               </h3>
               <p className="text-gray-500 text-sm font-medium">Un monologo sull'identità abruzzese tra orgoglio e ironia.</p>
             </div>
-          </div>
+          </div>}
         </div>
 
         <motion.div

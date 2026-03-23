@@ -14,6 +14,7 @@ import Hero from './components/Hero';
 import CustomCursor from './components/CustomCursor';
 import EasterEggs from './components/EasterEggs';
 import { useLenis } from './hooks/useLenis';
+import type { Show, Quote, Video } from './types/sanity';
 
 // Register GSAP plugins once globally (replaces src/main.tsx)
 gsap.registerPlugin(ScrollTrigger);
@@ -30,7 +31,13 @@ const Contact = dynamic(() => import('./components/Contact'), { ssr: false });
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 const SectionDivider = dynamic(() => import('./components/SectionDivider'), { ssr: false });
 
-export default function App() {
+interface AppProps {
+  shows: Show[]
+  quotes: Quote[]
+  videos: Video[]
+}
+
+export default function App({ shows, quotes, videos }: AppProps) {
   useLenis();
 
   // Remove splash screen once React has mounted and painted
@@ -55,11 +62,11 @@ export default function App() {
       <main className="overflow-x-hidden">
         <Hero />
         <SectionDivider variant="label" label="01 / SPETTACOLI" />
-        <Shows />
+        <Shows shows={shows} />
         <SectionDivider variant="rule" />
-        <Quotes />
+        <Quotes quotes={quotes} />
         <SectionDivider variant="rule" />
-        <Videoflix />
+        <Videoflix videos={videos} />
         <SectionDivider variant="label" label="04 / PODCAST" />
         <Podcast />
         <SectionDivider variant="rule" />

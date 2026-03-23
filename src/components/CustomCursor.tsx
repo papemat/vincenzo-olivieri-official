@@ -11,10 +11,10 @@ export default function CustomCursor() {
     // Only on desktop — don't init on touch devices
     if (window.matchMedia('(hover: none)').matches) return;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let spotX = 0;
-    let spotY = 0;
+    let mouseX = -999;
+    let mouseY = -999;
+    let spotX = -999;
+    let spotY = -999;
     let rafId: number;
 
     const onMove = (e: MouseEvent) => {
@@ -26,18 +26,25 @@ export default function CustomCursor() {
       }
     };
 
-    const onOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button') !== null;
-      if (dotRef.current) dotRef.current.style.scale = isInteractive ? '0' : '1';
+    let isHovering = false;
+
+    const setHover = (active: boolean) => {
+      if (isHovering === active) return;
+      isHovering = active;
+      if (dotRef.current) dotRef.current.style.scale = active ? '0' : '1';
       if (ringRef.current) {
-        ringRef.current.style.opacity = isInteractive ? '1' : '0';
-        ringRef.current.style.scale = isInteractive ? '1' : '0';
+        ringRef.current.style.opacity = active ? '1' : '0';
+        ringRef.current.style.scale = active ? '1' : '0';
       }
       if (spotlightRef.current) {
-        spotlightRef.current.style.opacity = isInteractive ? '0.8' : '0.4';
-        spotlightRef.current.style.scale = isInteractive ? '1.5' : '1';
+        spotlightRef.current.style.opacity = active ? '0.8' : '0.4';
+        spotlightRef.current.style.scale = active ? '1.5' : '1';
       }
+    };
+
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      setHover(target.closest('a, button') !== null);
     };
 
     // Spotlight lerps smoothly without React re-renders
@@ -53,13 +60,17 @@ export default function CustomCursor() {
       rafId = requestAnimationFrame(tick);
     };
 
+    const onLeave = () => setHover(false);
+
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseover', onOver);
+    document.addEventListener('mouseleave', onLeave);
     rafId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseover', onOver);
+      document.removeEventListener('mouseleave', onLeave);
       cancelAnimationFrame(rafId);
     };
   }, []);

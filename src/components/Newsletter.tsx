@@ -1,10 +1,19 @@
 'use client'
 
-import { motion } from 'motion/react';
-import { Mail, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import ScrollNumber from './ScrollNumber';
 
 export default function Newsletter() {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) setSubmitted(true);
+  };
+
   return (
     <section className="py-14 md:py-20 bg-[#050505] text-white relative overflow-hidden border-t border-white/10">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-comedy-yellow/5 rounded-full blur-[150px] pointer-events-none" />
@@ -58,28 +67,48 @@ export default function Newsletter() {
               <span className="italic font-normal text-gray-500 block mt-2">(Tranquillo, non so nemmeno come si fa a mandare lo spam. Al massimo ti chiedo dei soldi in prestito).</span>
             </p>
 
-            <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="La tua email (quella vera, dai)"
-                className="flex-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-5 text-lg font-medium text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/80 transition-all shadow-inner"
-                required
-              />
-              <button
-                type="submit"
-                className="group relative flex items-center justify-center gap-3 px-8 py-5 bg-white text-black rounded-2xl font-bold uppercase tracking-wider hover:bg-comedy-yellow transition-all shadow-xl overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Iscriviti
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-comedy-yellow translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-              </button>
-            </form>
-
-            <p className="text-xs font-bold uppercase tracking-widest mt-8 text-gray-600">
-              * Cliccando "Iscriviti" accetti di ridere alle mie battute.
-            </p>
+            <AnimatePresence mode="wait">
+              {submitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center gap-3 py-4"
+                >
+                  <CheckCircle size={48} className="text-comedy-yellow" />
+                  <p className="text-xl font-bold text-white">Grazie! Ti scriviamo presto.</p>
+                  <p className="text-sm text-gray-500">(Prima o poi. Siamo comici, non robot).</p>
+                </motion.div>
+              ) : (
+                <motion.div key="form" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto" onSubmit={handleSubmit}>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="La tua email (quella vera, dai)"
+                      className="flex-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-5 text-lg font-medium text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/80 transition-all shadow-inner"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="group relative flex items-center justify-center gap-3 px-8 py-5 bg-white text-black rounded-2xl font-bold uppercase tracking-wider hover:bg-comedy-yellow transition-all shadow-xl overflow-hidden"
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        Iscriviti
+                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                      </span>
+                      <div className="absolute inset-0 bg-comedy-yellow translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+                    </button>
+                  </form>
+                  <p className="text-xs font-bold uppercase tracking-widest mt-8 text-gray-600">
+                    * Cliccando "Iscriviti" accetti di ridere alle mie battute.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>

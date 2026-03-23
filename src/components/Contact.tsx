@@ -1,9 +1,19 @@
 'use client'
 
-import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function Contact() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name.trim() && email.trim()) setSubmitted(true);
+  };
+
   return (
     <section id="contact" className="py-14 md:py-20 bg-[#050505] text-white relative overflow-hidden border-t border-white/5">
       {/* Cinematic Background */}
@@ -95,59 +105,88 @@ export default function Contact() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-comedy-yellow/10 blur-[100px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-zinc-800/50 blur-[100px] rounded-full pointer-events-none" />
             
-            <form className="relative z-10 space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <label htmlFor="name" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Nome</label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
-                    placeholder="Il tuo nome"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
-                    placeholder="la.tua@email.com"
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <label htmlFor="subject" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Oggetto</label>
-                <input
-                  type="text"
-                  id="subject"
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
-                  placeholder="Di cosa vuoi parlare?"
-                />
-              </div>
+            <AnimatePresence mode="wait">
+              {submitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative z-10 flex flex-col items-center gap-4 py-12 text-center"
+                >
+                  <CheckCircle size={56} className="text-comedy-yellow" />
+                  <p className="text-xl font-bold text-white">Grazie per il messaggio!</p>
+                  <p className="text-gray-400">Ti ricontatteremo presto.<br /><span className="text-sm italic opacity-70">(Probabilmente dopo il caffè).</span></p>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  className="relative z-10 space-y-4"
+                  onSubmit={handleSubmit}
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <label htmlFor="name" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Nome</label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
+                        placeholder="Il tuo nome"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
+                        placeholder="la.tua@email.com"
+                        required
+                      />
+                    </div>
+                  </div>
 
-              <div className="space-y-3">
-                <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Messaggio</label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all resize-none"
-                  placeholder="Scrivi qui il tuo messaggio..."
-                />
-              </div>
+                  <div className="space-y-3">
+                    <label htmlFor="subject" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Oggetto</label>
+                    <input
+                      type="text"
+                      id="subject"
+                      className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
+                      placeholder="Di cosa vuoi parlare?"
+                    />
+                  </div>
 
-              <button
-                type="submit"
-                className="w-full group relative flex items-center justify-center gap-3 py-4 bg-white text-black rounded-2xl font-bold uppercase tracking-wider hover:bg-comedy-yellow transition-all mt-2 overflow-hidden shadow-xl"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Invia Messaggio
-                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-comedy-yellow translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-              </button>
-            </form>
+                  <div className="space-y-3">
+                    <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Messaggio</label>
+                    <textarea
+                      id="message"
+                      rows={5}
+                      className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all resize-none"
+                      placeholder="Scrivi qui il tuo messaggio..."
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full group relative flex items-center justify-center gap-3 py-4 bg-white text-black rounded-2xl font-bold uppercase tracking-wider hover:bg-comedy-yellow transition-all mt-2 overflow-hidden shadow-xl"
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      Invia Messaggio
+                      <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </span>
+                    <div className="absolute inset-0 bg-comedy-yellow translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </motion.div>
 
         </div>

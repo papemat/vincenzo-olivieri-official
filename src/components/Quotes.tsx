@@ -77,7 +77,7 @@ export default function Quotes({ quotes }: QuotesProps) {
           style={{ animation: 'marquee 30s linear infinite', width: 'max-content' }}
         >
           {[...quotes, ...quotes, ...quotes].map((quote, i) => (
-            <div key={i} className="h-full flex"><QuoteCard quote={quote} /></div>
+            <div key={`r1-${quote._id}-${i}`} className="h-full flex"><QuoteCard quote={quote} /></div>
           ))}
         </div>
 
@@ -87,7 +87,7 @@ export default function Quotes({ quotes }: QuotesProps) {
           style={{ animation: 'marquee-reverse 22s linear infinite', width: 'max-content' }}
         >
           {[...quotes, ...quotes, ...quotes].map((quote, i) => (
-            <div key={i} className="h-full flex"><QuoteCard quote={quote} /></div>
+            <div key={`r2-${quote._id}-${i}`} className="h-full flex"><QuoteCard quote={quote} /></div>
           ))}
         </div>
       </div>

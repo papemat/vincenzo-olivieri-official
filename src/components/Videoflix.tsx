@@ -175,10 +175,9 @@ export default function Videoflix({ videos }: VideoflixProps) {
                 <span className="w-4 h-px bg-comedy-yellow" />
                 <span className="text-xs font-bold uppercase tracking-widest text-comedy-yellow">{videos[3].category}</span>
               </div>
-              <h3 className="font-headline text-3xl md:text-4xl uppercase tracking-wide leading-tight group-hover:text-comedy-yellow text-white transition-colors mb-2">
+              <h3 className="font-headline text-3xl md:text-4xl uppercase tracking-wide leading-tight group-hover:text-comedy-yellow text-white transition-colors">
                 {videos[3].title}
               </h3>
-              <p className="text-gray-500 text-sm font-medium">Un monologo sull'identità abruzzese tra orgoglio e ironia.</p>
             </div>
           </div>}
         </div>

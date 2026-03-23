@@ -1,3 +1,5 @@
+'use client'
+
 import { Facebook, Instagram, Youtube, ArrowUp } from 'lucide-react';
 
 export default function Footer() {

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X, Youtube, Instagram, Facebook } from 'lucide-react';

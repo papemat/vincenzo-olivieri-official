@@ -1,3 +1,5 @@
+'use client'
+
 import { motion } from 'motion/react';
 import { Star, Award, Mic2 } from 'lucide-react';
 import ScrollNumber from './ScrollNumber';

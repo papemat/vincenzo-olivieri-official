@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Play, Tv, ArrowRight } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client'
+
 import { motion } from 'motion/react';
 import { Mic2, Play, Headphones } from 'lucide-react';
 

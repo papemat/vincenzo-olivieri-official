@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", sans-serif;
+  --font-headline: "Bebas Neue", sans-serif;
+  --color-comedy-yellow: #FFD700;
+  --color-comedy-yellow-dim: color-mix(in srgb, #FFD700 60%, transparent);
+  --color-danger-red: #CC0000;
+  --color-bg-base: #050505;
+  --color-yellow-wash-3: color-mix(in srgb, #FFD700 3%, #050505);
+  --color-yellow-wash-6: color-mix(in srgb, #FFD700 6%, #050505);
+  --color-yellow-wash-10: color-mix(in srgb, #FFD700 10%, #050505);
+  --text-hero: clamp(3.5rem, 12vw, 10rem);
+  --text-display: clamp(3rem, 8vw, 8rem);
+  --text-headline: clamp(2rem, 5vw, 5rem);
+  --text-body-lg: clamp(1.1rem, 2vw, 1.375rem);
+  --text-label: clamp(0.65rem, 1vw, 0.75rem);
+  --section-py: clamp(6rem, 12vw, 10rem);
+}
+
+html {
+  /* scroll-behavior handled by Lenis */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #050505;
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-comedy-yellow);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.custom-cursor.hovering {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+}
+
+/* Noise overlay for a gritty, live-club feel */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: noiseShift 8s steps(2) infinite;
+}
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD700;
+}
+
+.crazy-mode {
+  animation: crazyShake 0.2s infinite;
+  filter: hue-rotate(90deg) invert(10%) contrast(150%);
+}
+
+@keyframes crazyShake {
+  0% { transform: translate(2px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(0px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(2px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(2px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* Lenis smooth scroll overrides */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Animated noise shift */
+@keyframes noiseShift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2%, -1%); }
+  50%  { transform: translate(1%, 2%); }
+  75%  { transform: translate(-1%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Section divider animated rule */
+.section-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+}
+
+/* Split text animation base */
+.split-line {
+  overflow: hidden;
+  display: block;
+}
+.split-line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* CSS-driven char reveal — used by TextReveal triggerOnMount to stay off JS thread */
+@keyframes char-reveal {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0%);   opacity: 1; }
+}
+.char-reveal-css {
+  display: inline-block;
+  overflow: hidden;
+}
+.char-reveal-css .reveal-inner {
+  display: block;
+  animation: char-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Yellow prose highlight */
+.prose-highlight {
+  background: linear-gradient(180deg, transparent 60%, color-mix(in srgb, #FFD700 25%, transparent) 60%);
+  padding: 0 2px;
+}
+
+/* Cinematic vignette */
+.vignette {
+  background: radial-gradient(ellipse at center, transparent 40%, #050505 100%);
+}
+
+/* Reverse marquee direction */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Quotes marquee pause on hover */
+.quotes-track {
+  animation-play-state: running;
+}
+.quotes-track:hover {
+  animation-play-state: paused;
+}
+
+/* Anchor offset for sticky navbar */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Section edge fades — overlays the top/bottom of each section */
+.section-fade::before,
+.section-fade::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 20;
+}
+.section-fade::before {
+  top: 0;
+  background: linear-gradient(to bottom, #050505 0%, transparent 100%);
+}
+.section-fade::after {
+  bottom: 0;
+  background: linear-gradient(to top, #050505 0%, transparent 100%);
+}
+
+/* Splash screen */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+#splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#splash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+#splash::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: splash-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes splash-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.15); opacity: 1; }
+}
+.splash-wordmark {
+  font-family: 'Bebas Neue', var(--font-headline), sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  animation: splash-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.splash-wordmark em {
+  font-style: normal;
+  color: #FFD700;
+}
+@keyframes splash-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.splash-tagline {
+  font-family: 'Inter', var(--font-sans), sans-serif;
+  font-size: clamp(0.55rem, 1.5vw, 0.7rem);
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+  animation: splash-in 0.7s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.splash-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, transparent, #FFD700 40%, #FFD700);
+  animation: splash-progress 1s 0.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes splash-progress {
+  to { width: 100%; }
+}
+.splash-star {
+  font-family: 'Bebas Neue', var(--font-headline), sans-serif;
+  font-size: clamp(0.55rem, 1.2vw, 0.65rem);
+  letter-spacing: 0.4em;
+  color: rgba(255,215,0,0.5);
+  margin-top: 28px;
+  position: relative;
+  z-index: 1;
+  animation: splash-in 0.7s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

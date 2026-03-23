@@ -1,9 +1,12 @@
+'use client'
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { lazy, Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CustomCursor from './components/CustomCursor';
@@ -11,15 +14,15 @@ import EasterEggs from './components/EasterEggs';
 import { useLenis } from './hooks/useLenis';
 
 // Lazy-load below-the-fold sections to reduce initial JS parse on mobile
-const About = lazy(() => import('./components/About'));
-const Shows = lazy(() => import('./components/Shows'));
-const Videoflix = lazy(() => import('./components/Videoflix'));
-const Quotes = lazy(() => import('./components/Quotes'));
-const Podcast = lazy(() => import('./components/Podcast'));
-const Newsletter = lazy(() => import('./components/Newsletter'));
-const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
-const SectionDivider = lazy(() => import('./components/SectionDivider'));
+const About = dynamic(() => import('./components/About'), { ssr: false });
+const Shows = dynamic(() => import('./components/Shows'), { ssr: false });
+const Videoflix = dynamic(() => import('./components/Videoflix'), { ssr: false });
+const Quotes = dynamic(() => import('./components/Quotes'), { ssr: false });
+const Podcast = dynamic(() => import('./components/Podcast'), { ssr: false });
+const Newsletter = dynamic(() => import('./components/Newsletter'), { ssr: false });
+const Contact = dynamic(() => import('./components/Contact'), { ssr: false });
+const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
+const SectionDivider = dynamic(() => import('./components/SectionDivider'), { ssr: false });
 
 export default function App() {
   useLenis();
@@ -45,25 +48,21 @@ export default function App() {
       <Navbar />
       <main className="overflow-x-hidden">
         <Hero />
-        <Suspense fallback={null}>
-          <SectionDivider variant="label" label="01 / SPETTACOLI" />
-          <Shows />
-          <SectionDivider variant="rule" />
-          <Quotes />
-          <SectionDivider variant="rule" />
-          <Videoflix />
-          <SectionDivider variant="label" label="04 / PODCAST" />
-          <Podcast />
-          <SectionDivider variant="rule" />
-          <About />
-          <SectionDivider variant="rule" />
-          <Newsletter />
-          <Contact />
-        </Suspense>
+        <SectionDivider variant="label" label="01 / SPETTACOLI" />
+        <Shows />
+        <SectionDivider variant="rule" />
+        <Quotes />
+        <SectionDivider variant="rule" />
+        <Videoflix />
+        <SectionDivider variant="label" label="04 / PODCAST" />
+        <Podcast />
+        <SectionDivider variant="rule" />
+        <About />
+        <SectionDivider variant="rule" />
+        <Newsletter />
+        <Contact />
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <Footer />
     </div>
   );
 }

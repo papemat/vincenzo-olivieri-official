@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef } from 'react';
 import { PlayCircle, ArrowRight, Star } from 'lucide-react';
 import { useGSAP } from '@gsap/react';

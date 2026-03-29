@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X, Youtube, Instagram, Facebook } from 'lucide-react';
+import { navigateWithTransition } from '@/hooks/useViewTransition';
 
 const NAV_LINKS = [
   { name: 'Home', href: '#home' },
@@ -58,6 +59,12 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                navigateWithTransition(() => {
+                  document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                });
+              }}
               className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors relative group"
             >
               {link.name}
@@ -112,7 +119,13 @@ export default function Navbar() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.08, duration: 0.4 }}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMobileMenuOpen(false);
+                      navigateWithTransition(() => {
+                        document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                      });
+                    }}
                     className="font-display text-3xl sm:text-4xl uppercase tracking-wider text-gray-400 hover:text-comedy-yellow transition-colors"
                   >
                     {link.name}

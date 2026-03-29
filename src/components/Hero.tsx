@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import { PlayCircle, ArrowRight, Star } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -89,10 +90,17 @@ export default function Hero() {
       {/* Background — no blur, no GSAP on this element, parallax on inner */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/70 via-[#050505]/40 to-[#050505] z-10" />
-        <div
-          className="hero-bg absolute inset-[-20%] bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=2070')" }}
-        />
+        <div className="hero-bg absolute inset-[-20%] opacity-55">
+          <Image
+            src="https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80&w=2070"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="140vw"
+            className="object-cover object-center"
+          />
+        </div>
       </div>
 
       {/* Vignette */}

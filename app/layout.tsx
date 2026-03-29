@@ -24,6 +24,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vincenzoolivieri.it'),
+  alternates: { canonical: '/' },
   title: 'Vincenzo Olivieri — Comico, Autore, Speaker',
   description: 'Sito ufficiale di Vincenzo Olivieri. Comico, caratterista, cantante, autore e speaker radiofonico. In tour con "Roba da matti 2025".',
   keywords: ['Vincenzo Olivieri', 'comico', 'stand-up', 'Roba da matti', 'tour 2025', 'Abruzzo'],

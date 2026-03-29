@@ -34,8 +34,16 @@ export default function CustomCursor() {
       if (isHovering) return;
       isHovering = true;
       spotScale = 1.5;
+      if (spotlightRef.current) {
+        spotlightRef.current.style.background = 'rgba(255,215,0,0.18)';
+        spotlightRef.current.style.opacity = isVisible ? '0.5' : '0';
+      }
+      if (ringRef.current) {
+        ringRef.current.style.borderColor = '#FFD700';
+        ringRef.current.style.boxShadow = '0 0 12px 2px rgba(255,215,0,0.25)';
+        if (isVisible) ringRef.current.style.opacity = '1';
+      }
       if (dotRef.current) dotRef.current.style.opacity = '0';
-      if (ringRef.current && isVisible) ringRef.current.style.opacity = '1';
     };
 
     const onPointerLeave = (e: Event) => {
@@ -44,8 +52,16 @@ export default function CustomCursor() {
       if (!isHovering) return;
       isHovering = false;
       spotScale = 1;
+      if (spotlightRef.current) {
+        spotlightRef.current.style.background = '';
+        spotlightRef.current.style.opacity = isVisible ? '0.4' : '0';
+      }
+      if (ringRef.current) {
+        ringRef.current.style.borderColor = '';
+        ringRef.current.style.boxShadow = '';
+        ringRef.current.style.opacity = '0';
+      }
       if (dotRef.current && isVisible) dotRef.current.style.opacity = '1';
-      if (ringRef.current) ringRef.current.style.opacity = '0';
     };
 
     const show = () => {

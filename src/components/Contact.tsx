@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
@@ -23,11 +24,12 @@ export default function Contact() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#050505] via-[#050505]/95 to-zinc-900/50 z-10" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-comedy-yellow/20 to-transparent z-20" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-comedy-yellow/5 rounded-full blur-[150px] z-10 pointer-events-none" />
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=2070"
           alt="Backstage"
-          loading="lazy"
-          className="w-full h-full object-cover opacity-20 grayscale mix-blend-overlay"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-20 grayscale mix-blend-overlay"
         />
       </div>
 

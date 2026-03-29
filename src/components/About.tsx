@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { Star, Award, Mic2 } from 'lucide-react';
 import ScrollNumber from './ScrollNumber';
@@ -86,11 +87,12 @@ export default function About() {
           >
             <div className="absolute inset-0 rounded-[2.5rem] lg:rounded-l-none overflow-hidden border border-white/10 shadow-2xl bg-zinc-900/50">
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/50 via-transparent to-transparent z-10" />
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200"
                 alt="Vincenzo Olivieri sul palco"
-                loading="lazy"
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
               />
             </div>
 

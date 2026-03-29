@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -39,6 +39,13 @@ interface AppProps {
 
 export default function App({ shows, quotes, videos }: AppProps) {
   useLenis();
+
+  // Refresh ScrollTrigger positions when viewport resizes
+  const handleResize = useCallback(() => ScrollTrigger.refresh(), []);
+  useEffect(() => {
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
 
   // Remove splash screen once React has mounted and painted
   useEffect(() => {

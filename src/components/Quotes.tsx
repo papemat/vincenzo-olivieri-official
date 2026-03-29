@@ -1,8 +1,14 @@
 'use client'
 
+import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Quote as QuoteIcon } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import type { Quote } from '@/types/sanity';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function QuoteCard({ quote }: { quote: Quote }) {
   return (
@@ -31,6 +37,28 @@ interface QuotesProps {
 }
 
 export default function Quotes({ quotes }: QuotesProps) {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const rows = gsap.utils.toArray<HTMLElement>('.quotes-row', marqueeRef.current);
+    gsap.fromTo(
+      rows,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: marqueeRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  }, { scope: marqueeRef });
+
   return (
     <section className="pt-12 pb-10 md:pt-20 md:pb-16 bg-[#050505] text-white relative overflow-hidden section-fade">
       {/* Yellow glow */}
@@ -70,10 +98,10 @@ export default function Quotes({ quotes }: QuotesProps) {
       </div>
 
       {/* Dual marquee rows — full width, no container */}
-      <div className="relative overflow-hidden">
+      <div ref={marqueeRef} className="relative overflow-hidden">
         {/* Row 1: left → right */}
         <div
-          className="flex items-stretch gap-6 mb-6 quotes-track"
+          className="quotes-row flex items-stretch gap-6 mb-6 quotes-track"
           style={{ animation: 'marquee 30s linear infinite', width: 'max-content' }}
         >
           {[...quotes, ...quotes, ...quotes].map((quote, i) => (
@@ -83,7 +111,7 @@ export default function Quotes({ quotes }: QuotesProps) {
 
         {/* Row 2: right → left */}
         <div
-          className="flex items-stretch gap-6 quotes-track"
+          className="quotes-row flex items-stretch gap-6 quotes-track"
           style={{ animation: 'marquee-reverse 22s linear infinite', width: 'max-content' }}
         >
           {[...quotes, ...quotes, ...quotes].map((quote, i) => (

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { Mic2, Play, Headphones } from 'lucide-react';
 
@@ -63,11 +64,12 @@ export default function Podcast() {
           >
             <div className="aspect-square rounded-[2.5rem] overflow-hidden border border-white/10 relative group shadow-2xl bg-zinc-900/50">
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent z-10 opacity-80" />
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=1000"
                 alt="Microfono Radio"
-                loading="lazy"
-                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
               />
               <div className="absolute inset-0 z-20 flex items-center justify-center">
                 <div className="relative">

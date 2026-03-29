@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { Play, Tv, ArrowRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
@@ -92,10 +93,12 @@ export default function Videoflix({ videos }: VideoflixProps) {
               {videos[0].category}
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent z-10 opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
-            <img
+            <Image
               src={videos[0].thumbnailUrl}
               alt={videos[0].title}
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, 66vw"
+              className="object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             <div className="absolute inset-0 z-20 flex flex-col justify-end p-5 md:p-12">
               <div className="flex items-center gap-4 mb-4">
@@ -135,10 +138,12 @@ export default function Videoflix({ videos }: VideoflixProps) {
               className="video-card group cursor-pointer flex flex-col"
             >
               <div className="relative aspect-video rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 mb-4 shadow-lg flex-1">
-                <img
+                <Image
                   src={video.thumbnailUrl}
                   alt={video.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-500" />
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -168,10 +173,12 @@ export default function Videoflix({ videos }: VideoflixProps) {
             className="video-card group cursor-pointer md:col-span-3 flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-white/10 bg-zinc-900/50 hover:border-comedy-yellow/20 transition-all duration-500"
           >
             <div className="relative aspect-video md:aspect-auto md:w-64 md:h-40 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 shrink-0">
-              <img
+              <Image
                 src={videos[3].thumbnailUrl}
                 alt={videos[3].title}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                fill
+                sizes="(max-width: 768px) 100vw, 256px"
+                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-all duration-500 group-hover:border-comedy-yellow/50 group-hover:text-comedy-yellow">

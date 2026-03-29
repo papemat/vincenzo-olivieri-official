@@ -7,7 +7,8 @@
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity": "npx sanity@latest dev --port 3333"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -18,10 +19,11 @@
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "next": "^15.5.14",
-    "next-sanity": "^12.1.5",
+    "next-sanity": "^12.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sanity": "^5.17.1"
+    "sanity": "^5.17.1",
+    "styled-components": "^6.3.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",

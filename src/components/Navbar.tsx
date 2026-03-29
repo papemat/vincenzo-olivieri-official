@@ -2,8 +2,35 @@
 
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Menu, X, Youtube, Instagram, Facebook } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { navigateWithTransition } from '@/hooks/useViewTransition';
+
+function IconFacebook({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
+function IconInstagram({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
+function IconYoutube({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+      <polygon fill="#050505" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+    </svg>
+  );
+}
 
 const NAV_LINKS = [
   { name: 'Home', href: '#home' },
@@ -62,7 +89,10 @@ export default function Navbar() {
               onClick={(e) => {
                 e.preventDefault();
                 navigateWithTransition(() => {
-                  document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                  const el = document.querySelector(link.href);
+                  if (!el) return;
+                  const y = el.getBoundingClientRect().top + window.scrollY - 72;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
                 });
               }}
               className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors relative group"
@@ -79,14 +109,14 @@ export default function Navbar() {
             isScrolled ? 'opacity-0 pointer-events-none absolute right-12' : 'opacity-100'
           }`}
         >
-          <a href="#" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
-            <Facebook size={16} />
+          <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
+            <IconFacebook size={16} />
           </a>
-          <a href="#" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
-            <Instagram size={16} />
+          <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
+            <IconInstagram size={16} />
           </a>
-          <a href="#" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
-            <Youtube size={16} />
+          <a href="#" aria-label="YouTube" className="w-10 h-10 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow hover:border-comedy-yellow/50 transition-all duration-300">
+            <IconYoutube size={16} />
           </a>
         </div>
 
@@ -140,9 +170,9 @@ export default function Navbar() {
               >
                 <p className="text-sm text-gray-500 italic font-medium">* Il menu del ristorante è a parte.</p>
                 <div className="flex items-center gap-6">
-                  <a href="#" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><Facebook size={24} /></a>
-                  <a href="#" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><Instagram size={24} /></a>
-                  <a href="#" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><Youtube size={24} /></a>
+                  <a href="#" aria-label="Facebook" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><IconFacebook size={24} /></a>
+                  <a href="#" aria-label="Instagram" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><IconInstagram size={24} /></a>
+                  <a href="#" aria-label="YouTube" className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-gray-400 hover:text-comedy-yellow transition-colors"><IconYoutube size={24} /></a>
                 </div>
               </motion.div>
             </div>

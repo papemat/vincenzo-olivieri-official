@@ -209,7 +209,9 @@ export default function Videoflix({ videos }: VideoflixProps) {
           className="mt-16 flex justify-center"
         >
           <a
-            href="#"
+            href="https://www.youtube.com/@vincenzoolivieri"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-zinc-900/50 backdrop-blur-sm border border-white/10 text-white rounded-full font-bold uppercase tracking-wider hover:border-comedy-yellow/50 transition-all overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2 text-sm">

@@ -63,13 +63,13 @@ export default function App({ shows, quotes, videos }: AppProps) {
         <Hero />
         <SectionDivider variant="label" label="01 / SPETTACOLI" />
         <Shows shows={shows} />
-        <SectionDivider variant="rule" />
+        <SectionDivider variant="label" label="02 / RECENSIONI" />
         <Quotes quotes={quotes} />
-        <SectionDivider variant="rule" />
+        <SectionDivider variant="label" label="03 / VIDEOFLIX" />
         <Videoflix videos={videos} />
         <SectionDivider variant="label" label="04 / PODCAST" />
         <Podcast />
-        <SectionDivider variant="rule" />
+        <SectionDivider variant="label" label="05 / CHI SONO" />
         <About />
         <SectionDivider variant="rule" />
         <Newsletter />

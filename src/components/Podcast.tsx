@@ -66,6 +66,7 @@ export default function Podcast() {
               <img
                 src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=1000"
                 alt="Microfono Radio"
+                loading="lazy"
                 className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
               />
               <div className="absolute inset-0 z-20 flex items-center justify-center">

@@ -89,6 +89,7 @@ export default function About() {
               <img
                 src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200"
                 alt="Vincenzo Olivieri sul palco"
+                loading="lazy"
                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
               />
             </div>

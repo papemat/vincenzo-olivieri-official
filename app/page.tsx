@@ -6,21 +6,33 @@ import type { Show, Quote, Video } from '@/types/sanity'
 export const dynamic = 'force-dynamic'
 
 async function getShows(): Promise<Show[]> {
-  return getClient().fetch(
-    `*[_type == "show"] | order(date asc) { _id, title, date, location, venue, status, ticketUrl }`
-  )
+  try {
+    return await getClient().fetch(
+      `*[_type == "show"] | order(date asc) { _id, title, date, location, venue, status, ticketUrl }`
+    )
+  } catch {
+    return []
+  }
 }
 
 async function getQuotes(): Promise<Quote[]> {
-  return getClient().fetch(
-    `*[_type == "quote"] { _id, text, author, role }`
-  )
+  try {
+    return await getClient().fetch(
+      `*[_type == "quote"] { _id, text, author, role }`
+    )
+  } catch {
+    return []
+  }
 }
 
 async function getVideos(): Promise<Video[]> {
-  return getClient().fetch(
-    `*[_type == "video"] | order(order asc, _createdAt asc) { _id, title, category, duration, thumbnailUrl, videoUrl, featured, order }`
-  )
+  try {
+    return await getClient().fetch(
+      `*[_type == "video"] | order(order asc, _createdAt asc) { _id, title, category, duration, thumbnailUrl, videoUrl, featured, order }`
+    )
+  } catch {
+    return []
+  }
 }
 
 export default async function Page() {

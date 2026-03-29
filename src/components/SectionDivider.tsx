@@ -3,7 +3,7 @@
 import { motion } from 'motion/react';
 
 interface SectionDividerProps {
-  variant: 'rule' | 'yellow-wash' | 'label';
+  variant: 'rule' | 'label';
   label?: string;
 }
 

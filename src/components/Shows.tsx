@@ -26,7 +26,7 @@ export default function Shows({ shows }: ShowsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const rows = gsap.utils.toArray<HTMLElement>('.show-row');
+    const rows = gsap.utils.toArray<HTMLElement>('.show-row', containerRef.current);
     rows.forEach((row, i) => {
       gsap.fromTo(
         row,
@@ -91,6 +91,11 @@ export default function Shows({ shows }: ShowsProps) {
 
         {/* Shows list — newspaper style */}
         <div className="flex flex-col">
+          {shows.length === 0 && (
+            <p className="text-center text-gray-500 font-medium py-12 border-t border-b border-white/10">
+              Nessuno spettacolo in programma al momento. Torna presto!
+            </p>
+          )}
           {shows.map((show) => {
             const { day, month, year } = formatShowDate(show.date);
             const isSoldOut = show.status === 'Sold Out';

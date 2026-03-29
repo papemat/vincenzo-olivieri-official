@@ -87,6 +87,7 @@ export default function Navbar() {
         <button
           className="lg:hidden ml-auto w-12 h-12 rounded-full bg-zinc-900/50 border border-white/10 flex items-center justify-center text-white hover:text-comedy-yellow transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>

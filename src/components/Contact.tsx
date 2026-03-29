@@ -7,6 +7,8 @@ import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -24,6 +26,7 @@ export default function Contact() {
         <img
           src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=2070"
           alt="Backstage"
+          loading="lazy"
           className="w-full h-full object-cover opacity-20 grayscale mix-blend-overlay"
         />
       </div>
@@ -159,6 +162,8 @@ export default function Contact() {
                     <input
                       type="text"
                       id="subject"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
                       className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all"
                       placeholder="Di cosa vuoi parlare?"
                     />
@@ -169,6 +174,8 @@ export default function Contact() {
                     <textarea
                       id="message"
                       rows={5}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
                       className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-comedy-yellow/50 focus:bg-black/60 transition-all resize-none"
                       placeholder="Scrivi qui il tuo messaggio..."
                     />

@@ -113,7 +113,11 @@ export default function Videoflix({ videos }: VideoflixProps) {
                 {videos[0].title}
               </h3>
               <div className="flex items-center gap-6">
-                <button className="flex items-center justify-center w-14 h-14 bg-comedy-yellow text-black rounded-full hover:bg-yellow-400 transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,215,0,0.3)]">
+                <button
+                  className="flex items-center justify-center w-14 h-14 bg-comedy-yellow text-black rounded-full hover:bg-yellow-400 transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,215,0,0.3)]"
+                  onClick={() => videos[0].videoUrl && window.open(videos[0].videoUrl, '_blank', 'noopener,noreferrer')}
+                  aria-label={`Guarda ${videos[0].title}`}
+                >
                   <Play size={22} fill="currentColor" className="ml-1" />
                 </button>
                 <span className="font-bold uppercase tracking-widest text-sm group-hover:text-comedy-yellow transition-colors">Guarda Ora</span>
@@ -123,8 +127,11 @@ export default function Videoflix({ videos }: VideoflixProps) {
 
           {/* Secondary videos — 2 side cards in right column */}
           {videos.slice(1, 3).map((video) => (
-            <div
+            <a
               key={video._id}
+              href={video.videoUrl || '#'}
+              target={video.videoUrl ? '_blank' : undefined}
+              rel={video.videoUrl ? 'noopener noreferrer' : undefined}
               className="video-card group cursor-pointer flex flex-col"
             >
               <div className="relative aspect-video rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 mb-4 shadow-lg flex-1">
@@ -150,11 +157,16 @@ export default function Videoflix({ videos }: VideoflixProps) {
               <h3 className="font-display text-lg md:text-xl uppercase tracking-wide leading-tight group-hover:text-white text-gray-300 transition-colors line-clamp-2">
                 {video.title}
               </h3>
-            </div>
+            </a>
           ))}
 
           {/* 4th video — full-width strip */}
-          {videos[3] && <div className="video-card group cursor-pointer md:col-span-3 flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-white/10 bg-zinc-900/50 hover:border-comedy-yellow/20 transition-all duration-500">
+          {videos[3] && <a
+            href={videos[3].videoUrl || '#'}
+            target={videos[3].videoUrl ? '_blank' : undefined}
+            rel={videos[3].videoUrl ? 'noopener noreferrer' : undefined}
+            className="video-card group cursor-pointer md:col-span-3 flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-white/10 bg-zinc-900/50 hover:border-comedy-yellow/20 transition-all duration-500"
+          >
             <div className="relative aspect-video md:aspect-auto md:w-64 md:h-40 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 shrink-0">
               <img
                 src={videos[3].thumbnailUrl}
@@ -179,7 +191,7 @@ export default function Videoflix({ videos }: VideoflixProps) {
                 {videos[3].title}
               </h3>
             </div>
-          </div>}
+          </a>}
         </div>
 
         <motion.div

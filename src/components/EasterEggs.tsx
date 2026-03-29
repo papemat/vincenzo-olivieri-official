@@ -94,14 +94,14 @@ export default function EasterEggs() {
     }
   }, [crazyMode]);
 
-  const [buttonPos, setButtonPos] = useState({ x: 24, y: 24 }); // bottom-6 left-6 roughly
+  const [buttonPos, setButtonPos] = useState({ x: 0, y: 0 });
 
   const handleButtonHover = () => {
     if (buttonClicks >= 2 && buttonClicks < 4) {
-      // Runaway logic
-      const newX = Math.random() * (window.innerWidth - 200);
-      const newY = Math.random() * (window.innerHeight - 100);
-      setButtonPos({ x: newX, y: newY });
+      // Runaway logic — offset relativo alla posizione fixed bottom-right
+      const offsetX = (Math.random() - 0.5) * 400; // -200 to +200px
+      const offsetY = (Math.random() - 0.5) * 300; // -150 to +150px
+      setButtonPos({ x: offsetX, y: offsetY });
     }
   };
 
@@ -169,7 +169,7 @@ export default function EasterEggs() {
         id="do-not-press"
         onClick={handleButtonClick}
         onMouseEnter={handleButtonHover}
-        animate={buttonClicks >= 2 && buttonClicks < 4 ? { x: buttonPos.x, y: -buttonPos.y } : { x: 0, y: 0 }}
+        animate={buttonClicks >= 2 && buttonClicks < 4 ? { x: buttonPos.x, y: buttonPos.y } : { x: 0, y: 0 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`fixed bottom-6 right-6 z-[9999] px-6 py-3 rounded-full font-bold uppercase tracking-widest text-xs transition-all shadow-2xl border backdrop-blur-md overflow-hidden group ${
